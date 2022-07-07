@@ -47,10 +47,9 @@ while True:
         ball_y -= 1
         display.set_pixel(ball_x, ball_y, 9)
         sleep(500)
-        
 
 
-while True: 
+while True:
     while ball_x < 4:
         if button_b.was_pressed() and paddle_x < 3:
             paddle_x += 1
@@ -101,7 +100,7 @@ while True:
         sleep(500)
         display.clear()
         ball_x -= 1
-        ball_y -= 1 
+        ball_y -= 1
     while ball_y > 0:
 
         if button_b.was_pressed() and paddle_x < 3:
@@ -118,8 +117,4 @@ while True:
         sleep(500)
         display.clear()
         ball_x += 1
-        ball_y -= 1    
-    
-
-
-
+        ball_y -= 1
