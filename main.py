@@ -1,4 +1,5 @@
 from microbit import *
+import speech
 
 paddle_x = 2
 paddle_y = 4
@@ -9,12 +10,19 @@ ball_x = 2
 ball_y = 0
 ball_length = 1
 
+
+display.scroll('Hello', wait=False)
+speech.say('Hello')
+
+while True:
+    if button_a.is_pressed() and button_b.is_pressed():
+        break
+
 for i in range(paddle_length):
     display.set_pixel(paddle_x + i, paddle_y, 9)
 
 display.set_pixel(ball_x, ball_y, 9)
 sleep(500)
-
 
 while True:
     while ball_y < 4:
@@ -60,4 +68,5 @@ while True:
 # game over
 display.clear()
 display.show(Image.SAD)
+
 
