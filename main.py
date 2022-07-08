@@ -1,14 +1,21 @@
 from microbit import *
 import speech
+import random
 
 paddle_x = 2
 paddle_y = 4
 paddle_length = 2
 
 
-ball_x = 2
-ball_y = 0
+ball_x = random.choice([1, 2, 3])
+ball_y = 1
 ball_length = 1
+
+
+time = 500
+
+change_x = random.choice([-1, 1])
+change_y = random.choice([-1, 1])
 
 
 display.scroll('Hello', wait=False)
@@ -22,47 +29,39 @@ for i in range(paddle_length):
     display.set_pixel(paddle_x + i, paddle_y, 9)
 
 display.set_pixel(ball_x, ball_y, 9)
-sleep(500)
+sleep(time)
 
 while True:
-    while ball_y < 4:
-        if button_b.was_pressed() and paddle_x < 3:
-            paddle_x += 1
-            display.clear()
-
-        if button_a.was_pressed() and paddle_x > 0:
-            paddle_x -= 1
-            display.clear()
-
+    if button_b.was_pressed() and paddle_x < 3:
+        paddle_x += 1
         display.clear()
 
-        for i in range(paddle_length):
-            display.set_pixel(paddle_x + i, paddle_y, 9)
+    if button_a.was_pressed() and paddle_x > 0:
+        paddle_x -= 1
+        display.clear()
 
-        if ball_x in range(paddle_x, paddle_x + paddle_length) and ball_y == 3:
-            break
+    display.clear()
 
-        ball_y += 1
-        display.set_pixel(ball_x, ball_y, 9)
-        sleep(500)
+    for i in range(paddle_length):
+        display.set_pixel(paddle_x + i, paddle_y, 9)
+
+    if ball_x in range(paddle_x, paddle_x + paddle_length) and ball_y == 3:
+        change_y *= -1
+        time -= 5
+
+    if ball_x == 0 or ball_x == 4:
+        change_x *= -1
+
+    if ball_y == 0:
+        change_y *= -1
+
+    ball_x += change_x
+    ball_y += change_y
+    display.set_pixel(ball_x, ball_y, 9)
+    sleep(time)
 
     if ball_y == 4:
         break
-
-    while ball_y > 0:
-        if button_b.was_pressed() and paddle_x < 3:
-            paddle_x += 1
-            display.clear()
-
-        if button_a.was_pressed() and paddle_x > 0:
-            paddle_x -= 1
-            display.clear()
-        display.clear()
-        for i in range(paddle_length):
-                 display.set_pixel(paddle_x + i, paddle_y, 9)
-        ball_y -= 1
-        display.set_pixel(ball_x, ball_y, 9)
-        sleep(500)
 
 
 # game over
