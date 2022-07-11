@@ -1,6 +1,7 @@
 from microbit import *
 import speech
 import random
+import radio
 
 paddle_x = 2
 paddle_y = 4
@@ -16,6 +17,9 @@ time = 500
 
 change_x = random.choice([-1, 1])
 change_y = random.choice([-1, 1])
+
+radio.config(group=2)
+radio.on()
 
 
 display.scroll('Hello', wait=False)
@@ -54,6 +58,13 @@ while True:
 
     if ball_y == 0:
         change_y *= -1
+        radio.send(str(ball_x))
+
+    #massage = radio.receive()
+    #if message:
+    #    ball_y == 0:
+    #    display.show(str(x))
+    #    change_y *= 1
 
     ball_x += change_x
     ball_y += change_y
@@ -67,5 +78,3 @@ while True:
 # game over
 display.clear()
 display.show(Image.SAD)
-
-
