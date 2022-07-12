@@ -12,6 +12,7 @@ ball_x = random.choice([1, 2, 3])
 ball_y = 1
 ball_length = 1
 
+active = True
 
 time = 500
 
@@ -43,6 +44,12 @@ while True:
     if button_a.was_pressed() and paddle_x > 0:
         paddle_x -= 1
 
+    message = radio.receive()
+    if message:
+        ball_x, change_x, change_y = [int(number) for number in message.split(', ')]
+        active = True
+        print('{}; {}; {}'.format(ball_x, change_x, change_y))
+
     # update game
     if ball_x in range(paddle_x, paddle_x + paddle_length) and ball_y == 3:
         change_y *= -1
@@ -53,16 +60,20 @@ while True:
 
     if ball_y == 0:
         change_y *= -1
-        radio.send(str(ball_x))
+        radio.send('{}, {}, {}'.format(ball_x, change_x, change_y))
+        active = False
 
     # render
     display.clear()
 
     for i in range(paddle_length):
         display.set_pixel(paddle_x + i, paddle_y, 9)
-    ball_x += change_x
-    ball_y += change_y
-    display.set_pixel(ball_x, ball_y, 9)
+
+    if active:
+        ball_x += change_x
+        ball_y += change_y
+        display.set_pixel(ball_x, ball_y, 9)
+
     sleep(time)
 
     if ball_y == 4:
