@@ -36,19 +36,14 @@ display.set_pixel(ball_x, ball_y, 9)
 sleep(time)
 
 while True:
+    # process input
     if button_b.was_pressed() and paddle_x < 3:
         paddle_x += 1
-        display.clear()
 
     if button_a.was_pressed() and paddle_x > 0:
         paddle_x -= 1
-        display.clear()
 
-    display.clear()
-
-    for i in range(paddle_length):
-        display.set_pixel(paddle_x + i, paddle_y, 9)
-
+    # update game
     if ball_x in range(paddle_x, paddle_x + paddle_length) and ball_y == 3:
         change_y *= -1
         time -= 5
@@ -60,12 +55,11 @@ while True:
         change_y *= -1
         radio.send(str(ball_x))
 
-    #massage = radio.receive()
-    #if message:
-    #    ball_y == 0:
-    #    display.show(str(x))
-    #    change_y *= 1
+    # render
+    display.clear()
 
+    for i in range(paddle_length):
+        display.set_pixel(paddle_x + i, paddle_y, 9)
     ball_x += change_x
     ball_y += change_y
     display.set_pixel(ball_x, ball_y, 9)
