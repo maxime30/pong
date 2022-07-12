@@ -23,8 +23,8 @@ radio.config(group=2)
 radio.on()
 
 
-display.scroll('Hello', wait=False)
-speech.say('Hello')
+#display.scroll('Hello', wait=False)
+#speech.say('Hello')
 
 while True:
     if button_a.is_pressed() and button_b.is_pressed():
@@ -46,7 +46,7 @@ while True:
 
     message = radio.receive()
     if message:
-        ball_x, change_x, change_y = [int(number) for number in message.split(', ')]
+        ball_x, change_x, change_y = [int(number) for number in message.split(',')]
         active = True
         print('{}; {}; {}'.format(ball_x, change_x, change_y))
 
@@ -60,9 +60,9 @@ while True:
 
     if ball_y == 0:
         change_y *= -1
-        radio.send('{}, {}, {}'.format(ball_x, change_x, change_y))
-        active = False
-
+        if active:
+            radio.send('{},{},{}'.format(ball_x, change_x, change_y))
+            active = False
     # render
     display.clear()
 
