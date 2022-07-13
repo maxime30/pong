@@ -23,8 +23,8 @@ radio.config(group=2)
 radio.on()
 
 
-#display.scroll('Hello', wait=False)
-#speech.say('Hello')
+display.scroll('Hello', wait=False)
+speech.say('Hello')
 
 while True:
     if button_a.is_pressed() and button_b.is_pressed():
